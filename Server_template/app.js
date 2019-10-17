@@ -88,7 +88,7 @@ server.get("/register",(req,res)=>{
   //(1)获取脚手架参数 uname upwd
   var uname = req.query.uname;
   var upwd = req.query.upwd;
-  var phone
+  // var phone
   console.log(uname,upwd);
   //(2)创建sql语句查询
   var sql = "SELECT uid FROM zty_user WHERE uname = ? AND upwd = md5(?)";
@@ -111,9 +111,9 @@ server.get("/register",(req,res)=>{
   })
 
 
+// 刘 ok
 
-
-//功能二:分页显示商品列表
+//功能二:分页显示s首页商品列表  
 //1:接收GET /product 
 server.get("/product",(req,res)=>{
 //2:接收二个参数 
@@ -129,11 +129,16 @@ var off = (pno-1)*ps;
 ps = parseInt(ps); 
 //6:创建sql语句
 //自己写:库名;表名;列名 小写
-var sql = "SELECT lid,price,lname,img_url FROM xz_laptop LIMIT ?,?";
+var sql = "SELECT pid,price,title,pic,href FROM zty_index_product LIMIT ?,?";
 //7:执行sql语句
 pool.query(sql,[off,ps],(err,result)=>{
-  if(err)throw err;
-  res.send({code:1,msg:"查询成功",data:result})
+  if(err){throw err}else{
+     res.send({code:1,msg:"查询成功",data:result});
+    //  result返回商品查询到的四个商品
+  console.log('我看看');
+  console.log(result);
+  }
+ 
 })
 //8:将返回结果发送脚手架 
 })
@@ -141,6 +146,29 @@ pool.query(sql,[off,ps],(err,result)=>{
 //启动 node app.js
 //http://127.0.0.1:4000/product
 //http://127.0.0.1:4000/product?pno=2
+
+
+// 荣###
+// 商品详情 /detail   表 zty_laptop 详情表
+server.get('/detail',(req,res)=>{
+   var lid=req.query.lid;
+  console.log(111);
+  console.log(lid);
+// sql语句
+  var sql='SELECT lid,family_id,subtitle,title,price,spec,lname,details,p_img FROM zty_laptop WHERE lid=?';
+  // 执行sql语句
+  pool.query(sql,[lid],(err,result)=>{
+    if(err){throw err}
+    
+       res.send({code:1,msg:"查询成功",data:result});
+    console.log('我看看呀呀呀');
+    console.log(result);
+  
+    
+   
+  })
+})
+
 
 
 //ALTER TABLE xz_cart ADD uid INT;
