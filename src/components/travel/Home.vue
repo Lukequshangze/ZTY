@@ -18,7 +18,7 @@
         </mt-tab-container-item>
         <!-- 我的 -->
          <mt-tab-container-item id="tab4">
-            <me></me>
+            <my></my>
         </mt-tab-container-item>
     </mt-tab-container>
 
@@ -27,8 +27,8 @@
             <!-- 首页 -->
             <mt-tab-item id="tab1" @click.native="change(0)">
                 <tabbar
-                    :normalImage="require('../../assets/home.png')"
-                    :selectedImage="require('../../assets/home-c.png')"
+                    :normalImage="require('../../../static/home/home.png')"
+                    :selectedImage="require('../../../static/home/home-c.png')"
                     :focused="currentIndex[0].isSelect">
                 </tabbar>
                 首页
@@ -36,8 +36,8 @@
             <!-- 目的地 -->
              <mt-tab-item id="tab2" @click.native="change(1)">
                  <tabbar
-                    :normalImage="require('../../assets/goal.png')"
-                    :selectedImage="require('../../assets/goal-c.png')"
+                    :normalImage="require('../../../static/home/goal.png')"
+                    :selectedImage="require('../../../static/home/goal-c.png')"
                     :focused="currentIndex[1].isSelect">
                 </tabbar>
                 目的地
@@ -45,8 +45,8 @@
             <!-- 行程 -->
             <mt-tab-item id="tab3" @click.native="change(2)">
                 <tabbar
-                    :normalImage="require('../../assets/xingcheng.png')"
-                    :selectedImage="require('../../assets/xingcheng-c.png')"
+                    :normalImage="require('../../../static/home/xingcheng.png')"
+                    :selectedImage="require('../../../static/home/xingcheng-c.png')"
                     :focused="currentIndex[2].isSelect">
                 </tabbar>
                 行程
@@ -54,13 +54,12 @@
             <!-- 我的 -->
              <mt-tab-item id="tab4" @click.native="change(3)">
                  <tabbar
-                    :normalImage="require('../../assets/me.png')"
-                    :selectedImage="require('../../assets/me-c.png')"
+                    :normalImage="require('../../../static/home/me.png')"
+                    :selectedImage="require('../../../static/home/me-c.png')"
                     :focused="currentIndex[3].isSelect">
                 </tabbar>
                 我的
             </mt-tab-item>
-
         </mt-tabbar>
 
 
@@ -78,7 +77,7 @@
     // 引入行程页
     import Travel from "./Travel.vue"
     // 引入我的页面
-    import Me from "./Me.vue"
+    import My from "./My.vue"
 export default {
     data() {
         return {
@@ -113,7 +112,7 @@ export default {
         // 注册行程页
         "travel":Travel,
         // 注册我的 页面
-        "me":Me
+        "my":My
     }
 }
 </script>
@@ -124,4 +123,13 @@ export default {
         overflow: hidden;
         padding-bottom:50px;
     }
+
+
+
+
+
+
+
+
+
 </style>

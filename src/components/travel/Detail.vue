@@ -1,0 +1,341 @@
+<template>
+    <div id="container">
+       <div class="page-head">
+            <img src="../../../static/img/gengduo.png" alt="" class="left-img">
+            <div class="right-head">
+            <div class="searchdiv">
+                <img src="../../../static/img/fenxiangmingpian.png" style="width:25px;" />
+            </div>
+            <div class="searchdiv" style="margin-left:20px;">
+                <img src="../../../static/img/gengduo_1.png" style="width:25px;margin-right:15px;"/>
+            </div>
+            </div>
+        </div>
+        <div id="mt-swap">
+            <mt-swipe :auto="4000" class="mt-swipe" :show-indicators="false">
+                <mt-swipe-item>
+                    <img src="../../../static/img/1.jpg" alt="">
+                </mt-swipe-item>
+                <mt-swipe-item>
+                    <img src="../../../static/img/2.jpg" alt="">
+                </mt-swipe-item>
+                <mt-swipe-item>
+                    <img src="../../../static/img/3.jpg" alt="">
+                </mt-swipe-item>
+            </mt-swipe>
+        </div>
+        <div class="detail">
+            <div class="score">
+                <ul>
+                    <li>5.0分</li>
+                    <li>895人出行</li>
+                </ul>
+                <p>(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游</p>
+                <p>
+                    <span>￥401.20</span>
+                    <span>/起</span>
+                </p>
+                <p>新用户下单立减￥4.01起</p>
+            </div>
+            <div class="recommend">
+                <p>
+                    <img src="../../../static/img/zan.png" alt="">稀饭推荐
+                </p>
+                <p>
+                    <img src="../../../static/img/xingxing.png" alt="">
+                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
+                </p>
+                <p>
+                    <img src="../../../static/img/xingxing.png" alt="">
+                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
+                </p>
+                <p>
+                    <img src="../../../static/img/xingxing.png" alt="">
+                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
+                </p>
+                <p>
+                    <img src="../../../static/img/xingxing.png" alt="">
+                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
+                </p>
+            </div>
+            <mt-navbar v-model="selected" class="mt-navbar">
+                <mt-tab-item id="tab1">1天行程</mt-tab-item>
+                <mt-tab-item id="tab2">费用明细</mt-tab-item>
+                <mt-tab-item id="tab3">预订须知</mt-tab-item>
+            </mt-navbar>
+
+            <!-- tab-container -->
+            <mt-tab-container v-model="selected">
+                <mt-tab-container-item id="tab1">
+                    <div class="tab1">
+                        <p>行程概要</p>
+                        <ul>
+                            <li>
+                                <img src="../../../static/img/hanglixiang.png" alt="">
+                                1天行程
+                            </li>
+                            <li>
+                                <img src="../../../static/img/shanmai.png" alt="">
+                                3个景点
+                            </li>
+                            <li>
+                                <img src="../../../static/img/_shiye_quanqiu.png" alt="">
+                                英语&中文
+                            </li>
+                        </ul>
+                        <hr>
+                        <p>行程详情</p>
+                     </div>
+                </mt-tab-container-item>
+                <mt-tab-container-item id="tab2">
+                    <div>
+                        <p>费用明细</p>
+                    </div>
+                </mt-tab-container-item>
+                <mt-tab-container-item id="tab3">
+                    子面板3
+                </mt-tab-container-item>
+            </mt-tab-container>
+            <div class="footer">
+                <ul>
+                    <li>
+                        <img :src="click?'../../../static/img/shoucang_gaoliang.png':'../../../static/img/collection.png'" @click="img" alt="">
+                        收藏
+                    </li>
+                    <li>
+                        <img src="../../../static/img/dianhua.png" alt="">
+                        电话咨询
+                    </li>
+                    <li>    
+                        <img src="../../../static/img/zixun.png" alt="">
+                        在线咨询
+                    </li>
+                </ul>
+                <router-link to="/order">
+                    立即预定
+                </router-link>
+            </div>
+        </div>
+    </div>
+</template>
+<script>
+export default {
+    data(){
+        return{
+            selected:"tab1",
+            click:false
+        }
+    },
+    methods:{
+        img(){
+            if(this.click)
+            {
+                this.click=false;
+            }
+            else
+            {
+                this.click=true;
+            }
+        }
+    }
+}
+</script>
+<style scoped>
+    *{margin:0;padding:0}  
+    /*底部撑开*/
+    /* #container{
+        display: flex;
+        justify-content: center;
+        overflow: hidden;
+        padding-bottom:70px;
+    } */
+    /*设置轮播图的高宽*/
+    #mt-swap{
+        width:100%;
+        height:225px;
+    }
+    .mt-swipe img{
+        width:100%;
+        height:225px;
+    }
+    
+    .page-head{
+     display: flex;
+     position: fixed;
+     z-index:999;
+     width:100%;
+     justify-content: space-between;
+     align-items: center;
+     padding-left:7px;
+     padding-right:7px;
+     height:48px;
+     color:#fff;
+     font-size:18px;
+   }
+   .left-img{
+       width:25px;
+       visibility: visible;
+   }
+   .right-head{
+     display: flex;
+   }
+   .searchdiv{
+     display: flex;
+     align-items: center;
+     height:48px;
+   }
+   .detail{
+       width:100%;
+       width:100%;
+       background:#f6f8fa;
+       padding-bottom:70px;
+   }
+   .score{
+       width:100%;
+       background:#fff;
+   }
+   .score>ul,.score p:nth-child(3){
+       display: flex;
+       justify-items: center;
+       justify-content: space-around;
+       width:40%;
+   }
+   .detail>ul>li{
+       width:45%;
+       font-size:14px;
+   }
+   ul{
+       list-style:none;
+   }
+   .score p:nth-child(2){
+       margin-top:10px;
+       text-align: justify;
+       word-break: break-all;
+   }
+   .score p:nth-child(3){
+       font-size: 13px;
+       color:orange;
+       width:30%;
+   }
+   .score p:nth-child(3) span:nth-child(1){
+       font-size:22px;
+   }
+   .score p:nth-child(3) span:nth-child(2){
+       text-align: center
+   }
+   .score p:nth-child(4){
+       color:coral;
+       font-size: 13px;
+       width:40%;
+       margin-top:5px;
+   }
+   .recommend{
+       margin:20px 0 15px;
+       width:100%;  
+       background:#fff;
+       padding:5px 0;
+       
+   }
+   .recommend p:nth-child(1){
+       font-size:13px;
+       width:20%;
+       margin-top:5px; 
+       color:deepskyblue;
+       margin-bottom:4px; 
+   }
+   .recommend p:nth-child(1) img{
+       width:10px;
+       margin-right:3px;
+      
+       
+   }
+   .recommend p:not(:nth-child(1)){
+       font-size:11px;
+       color:deepskyblue;
+       text-align: justify;
+       word-break: break-all;
+       padding:0 10px;
+   }
+   .recommend p:not(:nth-child(1)) img{
+       width:5px;
+   }
+   .mt-navbar{
+       padding-bottom:3px !important;
+   }
+   .tab1 p:nth-child(1){
+       text-align: justify;
+       word-break: break-all;
+       margin-top:10px; 
+   }
+   .tab1 ul{
+       display: flex;
+       justify-items:center;
+       justify-content: space-around;
+       width:100%;
+       margin:15px 0 8px -9px;
+   }
+   .tab1 ul li{
+       width:20%;
+       font-size: 14px;
+       text-align:center;
+   }
+   .tab1 ul li img{
+       width:30px;  
+       display: block;
+       margin: 0 auto;
+   }
+   .tab1 hr{
+       width:90%;
+       background: #000;
+       margin:0 auto 20px;
+   }
+   .tab1 p:nth-child(4){
+       text-align: justify;
+       word-break: break-all;
+       margin-top:10px; 
+   }
+   .footer{
+       width:100%;
+       background:#fff;
+       display:flex;
+       position: fixed;
+       bottom:0;
+       z-index: 5;
+       justify-content: space-between;
+       justify-items: center;
+       padding:8px 0;
+   }
+   .footer ul{
+       width:50%;
+       display: flex;
+       justify-content: space-around;
+       justify-items: center;
+
+   }
+   .footer ul li{
+       width:30%;
+       font-size: 13px;
+       text-align:center;
+   }
+   .footer ul li:nth-child(2){
+       margin-left:-7px;
+   }
+   .footer ul li img{
+       width:25px;
+       display: block;
+       margin:0 auto;
+   }
+   .footer a{
+       width:35%;
+       padding:5px 10px;
+       background:tomato;
+       color:#fff;
+       text-decoration: none;
+       margin-right:15px;
+       border-radius:5px;
+       display:inline-block;
+       height:35px;
+       line-height:35px;
+       text-align:center;
+   }
+</style>

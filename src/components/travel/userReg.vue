@@ -1,7 +1,8 @@
 <template>
     <div>
-    <h3>注册页面</h3>
-        <div id='reg'>
+    
+        <div id='reg' class="parent">
+            <h3>注册页面</h3>
             <input v-model="uname" @blur="regUname()" type="text" placeholder="请输入想要注册的用户名" autofocus>
             <span class="regMsg">{{unameMsg}}</span>
             <br>
@@ -14,7 +15,7 @@
            <input v-model="phone" @blur='regPhone()' type="text" placeholder="请输入手机号">
            <span class="regMsg">{{phoneMsg}}</span>
            <br>
-            <input v-model="email" type="text" placeholder='请输入邮箱'>
+            <input v-model="email" @blur='regEmail()' type="text" placeholder='请输入邮箱'>
             <span class="regMsg">{{emailMsg}}</span>
             <br>
             <button @click="submit" id='reg-btn'> 注册</button>
@@ -74,34 +75,52 @@
             },
             // 3: 密码确认函数   
             confirm(){
-                
                    this.supwd!=this.upwd? this.supwdMsg='两次输入的密码不一致':this.supwdMsg=''
-               
             },
             //4.手机验证函数
             regPhone(){
-                  // 定义密码验证正则
-                //   以字母开头，长度在6-18之间，只能包含字符、数字和下划线。
-                  var upwdReg=/^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$/
+                  // 定义手机验证正则
+                  var phoneReg=/^0?(13[0-9]|15[012356789]|18[0236789]|14[57])[0-9]{8}$/
                 // 如果为空
-                if(this.upwd===''){
-                    this.upwdMsg='密码不能为空'
+                if(this.phone===''){
+                    this.phoneMsg='手机号不能为空'
                     return
                 }else{
-                    console.log(upwdReg.test(this.upwd))
-                 upwdReg.test(this.upwd)?this.upwdMsg='':this.upwdMsg='以字母开头，长度在6-18之间，只能包含字母、数字和下划线。'
+                 phoneReg.test(this.phone)?this.phoneMsg='':this.phoneMsg='手机号格式不对'
                 }
             },
-            //提交发送ajax 请求
+            //5 邮箱正则验证
+             regEmail(){
+                // 定义邮箱验证正则  /^\w+[-+.]\w+)*@\w+([-.]\w+)*\.\w+([-.]\w+)*$/
+                  var emailReg= /^([a-zA-Z]|[0-9])(\w|\-)+@[a-zA-Z0-9]+\.([a-zA-Z]{2,4})$/
+                // 如果为空 就提示
+                console.log(this.email)
+                if(this.email===''){
+                    this.emailMsg='邮箱不能为空'
+                    return
+                }else{
+                // 否则用正则验证输入内容
+                 emailReg.test(this.email)?this.emailMsg='':this.emailMsg='邮箱格式不对'
+                }
+            },
+            //提交发送axios  get 请求
             submit(){
-                this.axios
+               axios('接口地址',{
+                    params:{
+                        c参数:值
+                    }
+               }).then(result=>{
+                   result.data
+               })
             }
-           
         }
     }        
 
 </script>
 <style>
+    .parent{
+        text-align:center;
+    }
     .regMsg{color:red;font-size:7px;display: block}
     
     /* 外层div    div>span+input*/
@@ -122,6 +141,7 @@
         margin:0 auto;
         color: aliceblue;
         border-radius: 5px;
+        font-weight: 400;
     }
 
 </style>

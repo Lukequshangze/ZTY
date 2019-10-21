@@ -1,8 +1,8 @@
 {
-  "name": "zty",
+  "name": "xifan3",
   "version": "1.0.0",
-  "description": " play",
-  "author": "lxr <lxr@163.com>",
+  "description": "A Vue.js project",
+  "author": "hxx <hxx702@qq.com>",
   "private": true,
   "scripts": {
     "dev": "webpack-dev-server --inline --progress --config build/webpack.dev.conf.js",
@@ -10,6 +10,8 @@
     "build": "node build/build.js"
   },
   "dependencies": {
+    "mint-ui": "^2.2.13",
+    "vant": "^2.2.9",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },
