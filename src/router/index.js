@@ -13,7 +13,7 @@ import UserReg from '@/components/travel/UserReg'
 import MyCart from '@/components/travel/MyCart'
 import MyOrder from '@/components/travel/MyOrder'
 import OrderList from '@/components/travel/OrderList'
-import Order from '@/components/travel/Order'
+import Order from '@/components/travel/Order'  
 import LoginDetail from '@/components/travel/LoginDetail'
 
 
@@ -23,7 +23,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
    {path: '/loginDetail',component: LoginDetail},
-   {path: '/order',component: Order},
+   {path: '/order/:lid',component: Order,props:true},
    {path: '/orderList',component: OrderList},
     {path: '/myOrder',component: MyOrder},
     {path: '/myCart',component: MyCart},
@@ -33,7 +33,7 @@ export default new Router({
     {path: '/goal',component: Goal},
     {path: '/index',component: Index},
     {path: '/travel',component: Travel},
-    {path: '/Detail',component: Detail},
+    {path: '/Detail/:lid',component: Detail,props:true},
     {path: '/',component: Home},
     {path: '/home',component: Home}
   ]

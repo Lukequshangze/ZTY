@@ -25,7 +25,7 @@
 <script>
   
     // 密码正则
-    var upwd
+    // var upwd
      export default {
         data(){
             return {
@@ -43,20 +43,26 @@
 
             }
         },
+        created() {
+            
+        },
         methods:{
+            //   var u=this.uname
             //1:事件函数：用户名焦点消失事件  验证用户名  字母数字 下划线 3-16位 
             regUname(){
                 // 创建用户名正则验证 字母数字 下划线 3-16位 
                  var unameReg =/^[a-zA-Z0-9_-]{3,16}$/
                 //  console.log(typeof this.uname)
+                // 获取用户输入的用户名
+                var u=this.uname
                 // 非空验证
-                if(this.uname===''){
+                if(u===''){
                      this.unameMsg='用户名不能为空'
-                  console.log(this.uname)
-                   return
+                  console.log(u);
+                   return;
                 }else{
                       //如果不合规范 则提示  
-                 unameReg.test(this.uname)?this.unameMsg='':this.unameMsg='用户名4-16 包含字母数字'
+                 unameReg.test(u)?this.unameMsg='':this.unameMsg='用户名4-16 包含字母数字'
                 }    
             },
             //2 :事件函数： 密码焦点消失 验证密码格式
@@ -105,12 +111,23 @@
             },
             //提交发送axios  get 请求
             submit(){
-               axios('接口地址',{
-                    params:{
-                        c参数:值
-                    }
-               }).then(result=>{
-                   result.data
+                 var u=this.uname
+                 var url='register';
+                 var obj={uname:u,upwd:this.upwd}
+               this.axios.get(
+                   url,
+               {params:obj})
+               .then(result=>{
+                 console.log(result);
+                //9:获取服务器返回结果
+                //10:登录失败提示消息
+                //11:登录成功跳转 /Product
+                if(result.data.code==200){
+                    this.$messagebox('消息','用户名注册成功，即将跳转登陆页面');
+                }
+                else{
+                    this.$messagebox('消息','用户名已存在，请重新输入');
+                }  
                })
             }
         }

@@ -67,13 +67,39 @@ export default {
       this.$messagebox("","密码格式不正确");
       return;
      }
-    }
+  //8:发送ajax 请求
+var url='login';
+var obj={uname:u,upwd:p};
+     this.axios.get(
+    url,
+    {params:obj}
+).then(res=>{
+    console.log(res);
+    //9:获取服务器返回结果
+     //10:登录失败提示消息
+     //11:登录成功跳转 /Product
+       console.log(res.data.code);
+       if(res.data.code<0){
+       this.$messagebox('消息','用户名和密码错误');
+       }else{
+        //跳转Prodect组件 
+        this.$messagebox('登录成功');
+        this.$router.push('/');
+       }
+
+
+    })
   }
+}
 }
 </script>
 <style scoped>
 #parent{
     text-align:center;
+    /* display: flex; */
+    /* justify-content: center; */
+    margin: 20% auto;
+   
 }
 /*Logo字体*/ 
 h4{
@@ -94,7 +120,7 @@ input{
     margin-bottom: 15px;
 }
 /*登录按钮样式*/
-.bt>button{
+.bt button{
     -webkit-appearance: none;
     -moz-appearance: none;
     border-radius: 20px;

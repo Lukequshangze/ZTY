@@ -11,26 +11,26 @@
             </div>
             </div>
         </div>
-        <div id="mt-swap">
+        <div id="mt-swap" v-for='(item1,item) of list' :key='item.i'>
             <mt-swipe :auto="4000" class="mt-swipe" :show-indicators="false">
                 <mt-swipe-item>
-                    <img src="../../../static/img/1.jpg" alt="">
+                    <img :src="'http://127.0.0.1:5050/'+item1.p_ban1"  alt="">
                 </mt-swipe-item>
                 <mt-swipe-item>
-                    <img src="../../../static/img/2.jpg" alt="">
+                    <img :src="'http://127.0.0.1:5050/'+item1.p_ban2" alt="">
                 </mt-swipe-item>
                 <mt-swipe-item>
-                    <img src="../../../static/img/3.jpg" alt="">
+                    <img :src="'http://127.0.0.1:5050/'+item1.p_ban3" alt="">
                 </mt-swipe-item>
             </mt-swipe>
         </div>
-        <div class="detail">
+        <div class="detail" v-for="(item,index) of list" :key='index' >
             <div class="score">
                 <ul>
-                    <li>5.0分</li>
+                    <li>{{item.subtitle}}分</li>
                     <li>895人出行</li>
                 </ul>
-                <p>(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游</p>
+                <h3>{{item.title}}</h3>
                 <p>
                     <span>￥401.20</span>
                     <span>/起</span>
@@ -49,14 +49,7 @@
                     <img src="../../../static/img/xingxing.png" alt="">
                     (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
                 </p>
-                <p>
-                    <img src="../../../static/img/xingxing.png" alt="">
-                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
-                </p>
-                <p>
-                    <img src="../../../static/img/xingxing.png" alt="">
-                    (半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游(半日)【巡航观洋】新西兰 基督城 "黑猫号"观海豚半日游
-                </p>
+              
             </div>
             <mt-navbar v-model="selected" class="mt-navbar">
                 <mt-tab-item id="tab1">1天行程</mt-tab-item>
@@ -83,19 +76,29 @@
                                 英语&中文
                             </li>
                         </ul>
+
                         <hr>
-                        <p>行程详情</p>
+                         <div class="xingcheng" v-for="(item,i) of list" :key="i">
+                            <p class="title">{{item.title}}</p>
+                            <span>概述</span>
+                             <div class="desc">{{item.details}} </div>
+                             <div class="line"></div>
+                             <h4>景点介绍</h4>
+                      <img :src="'http://127.0.0.1:5050/'+item.p_img"  />
+                
+                   </div>
                      </div>
                 </mt-tab-container-item>
                 <mt-tab-container-item id="tab2">
-                    <div>
+                    
                         <p>费用明细</p>
-                    </div>
+                   
                 </mt-tab-container-item>
                 <mt-tab-container-item id="tab3">
                     子面板3
                 </mt-tab-container-item>
             </mt-tab-container>
+         
             <div class="footer">
                 <ul>
                     <li>
@@ -111,8 +114,9 @@
                         在线咨询
                     </li>
                 </ul>
-                <router-link to="/order">
+                <router-link :to="/order/+lid">
                     立即预定
+                    
                 </router-link>
             </div>
         </div>
@@ -123,9 +127,26 @@ export default {
     data(){
         return{
             selected:"tab1",
-            click:false
+            click:false,
+            // 数据库返回的数据
+            list:[],
         }
     },
+    // 组件传参
+    props:["lid"], //{ ..., props:true}
+    created(){
+    // 创建url /detail
+    // 参数 lid
+    var url='detail'
+    var obj={lid:this.lid}
+     this.axios.get(url,{params:obj}).then(res=>{
+         console.log('这是ajax返回的res666');
+                console.log(res);
+                this.list=res.data.data;
+                console.log('这是商品详情list');
+                console.log(this.list)
+ })
+  },
     methods:{
         img(){
             if(this.click)
@@ -141,6 +162,32 @@ export default {
 }
 </script>
 <style scoped>
+   .xingcheng{
+     display: flex;
+     flex-direction: column;
+     justify-content: start;
+     border-left: 3px solid #ccc;
+     /* align-items: center; */
+     margin-left: 5%;
+     padding: 5%;
+   }
+    .xingcheng .line{
+        width: 1px;
+        height: 100%;
+        color: #ccc
+    }
+     .xingcheng .desc{
+          margin:2% auto;
+     }
+      .xingcheng .title{
+          font-size: 16px;
+          color: #000;
+          /* margin-bottom:  */
+      }
+      .xingcheng img{
+          width: 80%;
+          margin: 2% ;
+      }
     *{margin:0;padding:0}  
     /*底部撑开*/
     /* #container{

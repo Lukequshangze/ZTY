@@ -202,27 +202,34 @@
                     
                     
                     </div>
+
+                    <!-- ##########首页 -->
                      <div class="pro_1f">
                         <div>
                             <h3>新人超值专项</h3>
                         </div>
                     </div>
                     <div class="hot_sell">
-                       <div>
-                            <router-link to="/Detail"> 
+                       <div v-for='(item,i) of list' :key='i' class="every">
+                            <!-- <router-link :to="/Detail/+item.href" class="aaa">  -->
                                 <div class="hot_pic">
-                                    <img src="@../../../static/index_pic/pic/jhk-10.jpg">
+                                  
+                                    <router-link :to="/Detail/+item.href" class="aaa">
+                                       <img :src="'http://127.0.0.1:5050/'+item.pic">
+                                   </router-link>
                                 </div>
                                 <div class="hot_box">
-                                    <p class="hot_title">(7天)美国夏威夷欧湖岛+火山大岛+茂宜岛跟团旅游 </p>
-                                    <p class="hot_sco">5分</p>
+                                     <router-link :to="/Detail/+item.href" class="aaa">
+                                    <p class="hot_title">{{item.title}} </p>
+                                    <p class="hot_sco">{{item.subtitle}}分</p>
                                     <div class="hot_info">
-                                        <span class="hot_pri">￥9,282.92</span>
+                                        <span class="hot_pri">￥{{item.price.toFixed(2)}}</span>
                                         <span class="hot_up">/起</span>
                                         <span class="sell_info">1034人出行</span>
                                     </div>
+                                     </router-link>
                                 </div>
-                            </router-link>
+                            <!-- </router-link> -->
                        </div>
                     </div>
                 </div>
@@ -236,15 +243,52 @@
 <script>
 
 export default {
-  
+   data(){
+        // 存放服务端查询成功得到的结果集result select 成功的
+        return {
+            list:[],  //商品列表数组
+            pno:0     //页码（第几页）
+        }
+    },
+ // 页面加载中调用ajax请求
+    created() {
+        this.loadMore();
+    },
+    methods:{
+      loadMore(){     // 加载更多
+            // 1.创建url
+            var url="product";
+            // 2.创建obj参数
+            this.pno++;
+            var obj={pno:this.pno};
+            // 3.发送axios请求
+            this.axios.get(url,{params:obj}).then(res=>{
+            // res中有响应结果码 还有data code；1 data返回结果集 四个商品[{},{},]
+            console.log('这是ajax返回的res');
+            console.log(res);
+            // 4.接收返回结果并且显示
+            // this.list = res.data.data;
+            // 拼接上一页和下一页的数组  concat
+            var rows=this.list.concat(res.data.data);
+            this.list=rows;         
+            console.log('这是this.list')
+            console.log(this.list)
+            }) 
+        },
+}
+
+
  }
 
 </script>
 
 <style scoped>
 
-body{
+/* body{
     position: relative;
+} */
+.aaa{
+    display: block;
 }
 .main_part{
     font-size: 12px;
@@ -308,6 +352,7 @@ body{
     font-size: 12px;
 }
 .hot_box{
+    width:90%;
     display:flex;
     flex-wrap:wrap;
 }
@@ -443,51 +488,85 @@ body{
    color:black;
     font-size:12px;
 }
+/*###########详情*/
 
 /* hot_sell */
+/* .hot{
+    display: flex;
+     width:100%;
+    align-items: center;
+} */
+
+/*大*/
 .hot_sell{
+    width:100%;
+    display: flex;
     margin-top:30px;
     margin-bottom:10px;
-    position: relative;
+    flex-direction: column
+    /* position: relative; */
 }
-.hot_pic img{
-    width:60%;
-    height:100%;
-    border-radius: 5px;
-}
-.hot_pic{
-    position:absolute;
-    left: 0;
-    top:-25px;
+/*每个*/
+.every{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    margin-bottom: 5%;
+    border: 1px #66666629 solid;
 }
 .hot_box{
-    margin-left: 20px;
+    width: 60%;
+    /* margin:2%  2px; */
     height:113px;
-    display: block;
-    border: 1px #66666629 solid;
-    padding-left:28%;
+    /* display: block; */
+    display: flex;
+    flex-direction: row;
+    
+    /* justify-content: space-around; */
+    margin-bottom: 2%;
+    padding-left: 5%;
+    /* padding-left:44%; */
     border-radius: 8px;
 }
+.hot_pic{
+    width:40%;
+    /* position:absolute; */
+    /* left: 0; */
+    /* top:5px; */
+}
+.hot_pic img{
+    width:100%;
+    height:90%;
+    border-radius: 15px;
+}
+
+
 .hot_title{
     padding-top: 5px;
+    width: 100%;
     font-size: 13px;
 }
 .hot_sco{
-     padding-right: 12px;
+     /* padding-left: 2%; */
     padding-top: 5px;
-    float:right;
+    width: 100%;
+    /* float:right; */
     color:orangered;
 }
 .hot_info{
-   margin-top: 20px;
+   /* margin-top: 20px; */
+    /* padding-top: 5px; */
+    width: 100%;
 }
 .hot_pri{
     color: red;
     font-size: 20px;
+     /* padding-left: 2%; */
 }
 .hot_up{
     font-size:8px;
-    margin-right:5px;
+    /* margin-right:5px; */
 }
 .sell_info{
     padding-right:1%；

@@ -4,7 +4,7 @@
     <div>
       <mt-header title="提交订单">
         <!--此处跳转到详情页-->
-        <router-link to="/" slot="left">
+        <router-link to="/Detail" slot="left">
         <mt-button icon="back">back</mt-button>
         </router-link>
       </mt-header>
@@ -38,7 +38,7 @@
      <!-- 票价类型 -->
      <div class="ticketType">
         <div class="ticketTypeLt">
-          <p>成人<span>￥{{price}}/人</span></p>
+          <p>成人<span>￥{{adultPrice}}/人</span></p>
         </div>
         <div class="ticketTypeRt">
         <van-stepper class="ticketBtn" v-model="adult" />
@@ -46,7 +46,7 @@
     </div>
      <div class="ticketType">
         <div class="ticketTypeLt">
-          <p>儿童<span>￥{{price*0.5.toFixed(2)}}/人</span></p><!-- toFixed()存在缺陷有空修改 -->
+          <p>儿童<span>￥{{childrenPrice}}/人</span></p><!-- toFixed()存在缺陷有空修改 -->
         </div>
         <div class="ticketTypeRt">
         <van-stepper v-model="child" />
@@ -54,7 +54,7 @@
     </div>
      <div class="ticketType">
         <div class="ticketTypeLt">
-          <p>组团<span>￥{{price*0.88.toFixed(2)}}/人</span></p>
+          <p>组团<span>￥{{organizePrice}}/人</span></p>
         </div>
         <div class="ticketTypeRt">
         <van-stepper v-model="group" />
@@ -70,8 +70,8 @@
     <!-- 底部结算 -->
     <div id="orderSub">
       <ul>
-        <li>总价:￥<span>{{adult*price+child*price*0.5+group*price*0.85.toFixed(2)}}</span></li>
-        <li><router-link to="" id="orderSubBtn">提交订单</router-link></li><!--跳转支付-->
+        <li>总价:￥<span>{{adult*adultPrice+child*childrenPrice*0.5+group*organizePrice*0.85.toFixed(2)}}</span></li>
+        <li><router-link to="" id="orderSubBtn" @click.native="user">提交订单</router-link></li><!--跳转支付-->
       </ul>
     </div>
   </div>
@@ -87,7 +87,6 @@
         adult:0,
         child:0,
         group:5,
-        price:200,
         uname:"",
         phone:"",
         address:"",
@@ -97,12 +96,47 @@
         popupVisible:false,
         disabled:false,
         isClicked:false,
+        adultPrice:0,
+        childrenPrice:0,
+        organizePrice:0
       }
     },
-    mounted () {
+    props:["lid"],
+    created(){
         let that = this
+        this.pricE();
+        this.uid();
     },
-    methods: {
+
+    methods:{
+        user(){
+          console.log("wo")
+          console.log(this.adult*this.adultPrice+this.child*this.childrenPrice*0.5+this.group*this.organizePrice*0.85.toFixed(2))
+          //提交订单将信息插入数据库
+          //var uid
+          var url='addcart'
+          var lid=this.lid;
+          var adult=this.adult;
+          var children=this.child;
+          var organize=this.group;
+          var uname=this.uname;
+          var phone=this.phone;
+          var address=this.address
+          var price=this.adult*this.adultPrice+this.child*this.childrenPrice*0.5+this.group*this.organizePrice*0.85.toFixed(2)
+          var obj={
+            lid:lid,
+            adult:adult,
+            children:children,  
+            organize:organize,
+            uname:uname,
+            phone:phone,
+            address:address,
+            price:price
+          }
+          this.axios.get(url,{params:obj}).then(res=>{
+            console.log(res)
+          })
+        },
         selectData () { // 打开时间选择器
             // 如果已经选过日期，则再次打开时间选择器时，日期回显（不需要回显的话可以去掉 这个判断）
             if (this.selectedValue) {
@@ -114,8 +148,68 @@
         },
         dateConfirm () { // 时间选择器确定按钮，并把时间转换成我们需要的时间格式
             this.selectedValue = formatDate(this.dateVal)
+        },
+          loadMore(){
+              //    url 接口 addcart添加购物车
+    // 参数
+ //1 创建url 请求服务器的地址
+         var url='findcart';
+        // 2发送ajax 请求获取购物车
+        this.axios.get(url).then(res=>{
+            console.log(res.data.code);
+            if(res.data.code==-1){
+                // 提示交互提示框 .then 回调函数 函数执行完后进行的操作
+                this.$messagebox('消息','请登录').then(res=>{
+                    // 跳转到登录的组件
+                    this.$router.push('/Login');
+
+                })
+            }else{
+                 // 3将服务器返回数据保存list
+                    //this.list=res.data.data
+                 // (1)为每个商品添加状态******** 循坏遍历
+                 // res变量data属性data数组 
+                var list=res.data.data;
+                //  for(var item of list){
+                //      item.cb=true;
+
+                //  }
+                //  (2)添加属性并且赋值
+                this.list=list;
+                console.log('加入购物车 this.list');
+                console.log( this.list);
+                // 2.9加载完之前 前清空
+                // this.$store.commit('clearCart');
+                // (3)创建循环 遍历数组
+                // for(var item of this.list){
+                //     // (4)修改购物车数量
+                //     this.$store.commit('addCart')
+
+                // }
+            }
+        })
+        },
+        pricE(){
+          //获取三种价格
+          var url='detail'
+          var obj={lid:this.lid}
+          this.axios.get(url,{params:obj})
+          .then(res=>{
+            console.log(res)
+            this.adultPrice=res.data.data[0].adult
+            this.childrenPrice=res.data.data[0].children
+            this.organizePrice=res.data.data[0].organize
+          })
+        },
+        uid(){
+          var url='uid'
+          this.axios.get(url).then(res=>{
+            console.log(res)
+          })
         }
-    }
+    },
+    
+
     };
 </script>
 <style>

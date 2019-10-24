@@ -1,5 +1,5 @@
 <template>
-<div>
+<div class="container">
     <!-- 顶部导航 -->
     <div class="header">
         <img src="../../../static/my_login/jiantou.png" alt="">
@@ -146,9 +146,15 @@
 </script>
 <style scoped>
 /*导航条*/
+.contanier{
+    /* text-align: center; */
+    margin: 20% auto;
+}
 .header{
     text-align: left;
     display: flex;
+    margin-top:5%;
+    justify-content: center;
     margin-bottom:0.5rem;
 }
 .header>h4:nth-child(2){
@@ -175,7 +181,7 @@
 /*头部样式*/
 .common{
     display: flex;
-    line-height: 1px;
+    line-height: 1.8;
     border-bottom: 1px solid #cccccc;
     box-sizing: border-box;
 }
