@@ -204,7 +204,7 @@
                     </div>
 
                     <!-- ##########首页 -->
-                     <div class="pro_1f">
+                    <div class="pro_1f">
                         <div>
                             <h3>新人超值专项</h3>
                         </div>
@@ -214,12 +214,12 @@
                             <!-- <router-link :to="/Detail/+item.href" class="aaa">  -->
                                 <div class="hot_pic">
                                   
-                                    <router-link :to="/Detail/+item.href" class="aaa">
+                                    <router-link :to="/Detail/+item.href+'/'+uid" class="aaa">
                                        <img :src="'http://127.0.0.1:5050/'+item.pic">
                                    </router-link>
                                 </div>
                                 <div class="hot_box">
-                                     <router-link :to="/Detail/+item.href" class="aaa">
+                                     <router-link :to="/Detail/+item.href+'/'+uid" class="aaa">
                                     <p class="hot_title">{{item.title}} </p>
                                     <p class="hot_sco">{{item.subtitle}}分</p>
                                     <div class="hot_info">
@@ -253,8 +253,10 @@ export default {
  // 页面加载中调用ajax请求
     created() {
         this.loadMore();
+        console.log(this.uid);
     },
-    methods:{
+    props:["uid"],
+    methods:{ 
       loadMore(){     // 加载更多
             // 1.创建url
             var url="product";

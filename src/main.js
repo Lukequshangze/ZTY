@@ -20,11 +20,17 @@ import 'vant/lib/index.css';
 import 'vant/lib/picker/style'
 import { DatetimePicker } from 'vant';
 import 'vant/lib/datetime-picker/style'
-
+//计步器
 import { Stepper } from 'vant';
-
 Vue.use(Stepper);
-
+// npm install --save axios
+import axios from 'axios'
+// 6 配置服务器基础路径
+axios.defaults.baseURL='http://127.0.0.1:5050/';
+// 7配置保存session信息 为true 保存seesion
+axios.defaults.withCredentials=true
+// 8；axios 注册vue
+Vue.prototype.axios=axios;
 // 3.将mint-ui注册vue实例
 Vue.use(MintUI)
 // 弹出层

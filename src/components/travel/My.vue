@@ -4,8 +4,8 @@
   <div>
   
       <div id='container'>
-            <myloginheader></myloginheader>
-             <mycart></mycart>
+            <myloginheader :uid='uid'></myloginheader>
+             <mycart :uid='uid'></mycart>
             <div id='huodong'>
                 <img src="../../../static/my_tools_icon/huodong.jpg" alt="">
             </div>
@@ -28,7 +28,16 @@
 import MyCart from './MyCart'
 import MyLoginHeader from './MyloginHeader'
 export default {
-    components:{'mycart':MyCart,'myloginheader':MyLoginHeader}
+    data:{
+        return (){
+
+        }
+    },
+    components:{'mycart':MyCart,'myloginheader':MyLoginHeader},
+    props:["uid"],
+    created(){
+        console.log(this.uid)
+    }
 }
 </script>
 

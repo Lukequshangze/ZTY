@@ -6,7 +6,7 @@
     <mt-tab-container v-model="active">
         <!-- 首页 -->
         <mt-tab-container-item id="tab1">
-            <index></index>
+            <index :uid='uid'></index>  <!-- 父组件传参给子组件 -->
         </mt-tab-container-item>
         <!-- 目的地 -->
          <mt-tab-container-item id="tab2">
@@ -18,7 +18,7 @@
         </mt-tab-container-item>
         <!-- 我的 -->
          <mt-tab-container-item id="tab4">
-            <my></my>
+            <my :uid='uid'></my>
         </mt-tab-container-item>
     </mt-tab-container>
 
@@ -90,6 +90,10 @@ export default {
                 {isSelect:false}
             ]
         }
+    },
+    props:["uid"],
+    created(){
+        console.log(this.uid)
     },
     methods: {
         change(n){

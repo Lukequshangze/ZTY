@@ -14,13 +14,17 @@
 	export default{
 		data(){
 			return{
-			cartText:[
-	          {icon:require("../../../static/myimg/mycart/order.png"),title:"全部订单"},
-	          {icon:require("../../../static/myimg/mycart/pay.png"),title:"待支付"},
-	          {icon:require("../../../static/myimg/mycart/trip.png"),title:"待出行"},
-	          {icon:require("../../../static/myimg/mycart/comment.png"),title:"待评价"}
+				cartText:[
+					{icon:require("../../../static/myimg/mycart/order.png"),title:"全部订单"},
+					{icon:require("../../../static/myimg/mycart/pay.png"),title:"待支付"},
+					{icon:require("../../../static/myimg/mycart/trip.png"),title:"待出行"},
+					{icon:require("../../../static/myimg/mycart/comment.png"),title:"待评价"}
         		]
 			}
+		},
+		props:["uid"],
+		created(){
+			console.log(this.uid)
 		}
 	}
 </script>

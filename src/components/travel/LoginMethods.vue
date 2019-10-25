@@ -84,7 +84,8 @@ var obj={uname:u,upwd:p};
        }else{
         //跳转Prodect组件 
         this.$messagebox('登录成功');
-        this.$router.push('/');
+        console.log(res.data.data)
+        this.$router.push('/home/'+res.data.data);
        }
 
 

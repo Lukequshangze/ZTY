@@ -26,7 +26,11 @@
                 uname:''
             }
         },
-        methods:{}
+        props:["uid"],
+        methods:{},
+        created(){
+            console.log(this.uid)
+        }
     } 
 </script>
 <style scoped>

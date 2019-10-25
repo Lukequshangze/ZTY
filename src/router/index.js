@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import HelloWorld from '@/components/HelloWorld'
-
 import Home from '@/components/travel/Home'
 import Detail from '@/components/travel/Detail'
 import Travel from '@/components/travel/Travel'
@@ -23,7 +22,7 @@ Vue.use(Router)
 export default new Router({
   routes: [
    {path: '/loginDetail',component: LoginDetail},
-   {path: '/order/:lid',component: Order,props:true},
+   {path: '/order/:lid/:uid',component: Order,props:true},
    {path: '/orderList',component: OrderList},
     {path: '/myOrder',component: MyOrder},
     {path: '/myCart',component: MyCart},
@@ -31,10 +30,10 @@ export default new Router({
     {path: '/loginMethods',component: LoginMethods},
     {path: '/my',component: My},
     {path: '/goal',component: Goal},
-    {path: '/index',component: Index},
+    {path: '/index/:uid',component: Index,props:true},
     {path: '/travel',component: Travel},
-    {path: '/Detail/:lid',component: Detail,props:true},
+    {path: '/Detail/:lid/:uid',component: Detail,props:true},
     {path: '/',component: Home},
-    {path: '/home',component: Home}
+    {path: '/home/:uid',component: Home,props:true}
   ]
 })

@@ -65,10 +65,11 @@ pool.query(sql,[uname,upwd],(err,result)=>{
    //5.1:保存用户id在session对象中
    //result数据格式 [{id:1}]
   req.session.uid = result[0].uid;
+  var uid=req.session.uid
   console.log('登录session');
   console.log(req.session.uid );
 
-  res.send({code:1,msg:"登录成功"});
+  res.send({code:1,msg:"登录成功",data:uid});
  }
  //(6)将结果返回脚手架
 })
@@ -160,7 +161,8 @@ pool.query(sql,[off,ps],(err,result)=>{
 // 荣###
 // 商品详情 /detail   表 zty_laptop 详情表 ok
 server.get('/detail',(req,res)=>{
-   var lid=req.query.lid;
+  var uid=req.session.uid
+  var lid=req.query.lid;
   console.log(111);
   console.log(lid);
 // sql语句
@@ -185,11 +187,11 @@ server.get('/detail',(req,res)=>{
 //1:接收请求 GET /addcart
 server.get("/addcart",(req,res)=>{
  //2:获取当前用户登录凭证 uid
- /*var uid = req.session.uid;
+ var uid = req.session.uid;
  //3:如果用户没登录返回错误消息
  if(!uid){
   res.send({code:-1,msg:"请登录"});return; 
- }*/
+}
  //4:获取商品编号/商品价格/商品名称
  var lid=req.query.lid;
  var adult=req.query.adult;
@@ -214,7 +216,7 @@ server.get("/addcart",(req,res)=>{
   //var sql = `UPDATE  zty_cart SET count=count+1 WHERE uid=${uid} AND lid=${lid}`;
   //}
   //10:执行sql
-  pool.query(sql,[null,null,lid,adult,children,organize,uname,phone,address,price],(err,result)=>{
+  pool.query(sql,[null,uid,lid,adult,children,organize,uname,phone,address,price],(err,result)=>{
     if(err)throw err;
     console.log(result)
     if(result.affectedRows>0)

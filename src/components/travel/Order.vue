@@ -101,11 +101,10 @@
         organizePrice:0
       }
     },
-    props:["lid"],
+    props:["lid","uid"],
     created(){
         let that = this
         this.pricE();
-        this.uid();
     },
 
     methods:{
@@ -114,15 +113,15 @@
           console.log(this.adult*this.adultPrice+this.child*this.childrenPrice*0.5+this.group*this.organizePrice*0.85.toFixed(2))
           //提交订单将信息插入数据库
           //var uid
-          var url='addcart'
+          var url='addcart';
           var lid=this.lid;
           var adult=this.adult;
           var children=this.child;
           var organize=this.group;
           var uname=this.uname;
           var phone=this.phone;
-          var address=this.address
-          var price=this.adult*this.adultPrice+this.child*this.childrenPrice*0.5+this.group*this.organizePrice*0.85.toFixed(2)
+          var address=this.address;
+          var price=this.adult*this.adultPrice+this.child*this.childrenPrice*0.5+this.group*this.organizePrice*0.85.toFixed(2);
           var obj={
             lid:lid,
             adult:adult,
@@ -134,6 +133,10 @@
             price:price
           }
           this.axios.get(url,{params:obj}).then(res=>{
+            /*if(res.data.data.code===1)
+            {
+
+            }*/
             console.log(res)
           })
         },
@@ -201,12 +204,6 @@
             this.organizePrice=res.data.data[0].organize
           })
         },
-        uid(){
-          var url='uid'
-          this.axios.get(url).then(res=>{
-            console.log(res)
-          })
-        }
     },
     
 

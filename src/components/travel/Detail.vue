@@ -114,7 +114,7 @@
                         在线咨询
                     </li>
                 </ul>
-                <router-link :to="/order/+lid">
+                <router-link :to="/order/+lid+'/'+uid">
                     立即预定
                     
                 </router-link>
@@ -133,7 +133,7 @@ export default {
         }
     },
     // 组件传参
-    props:["lid"], //{ ..., props:true}
+    props:["lid","uid"], //{ ..., props:true}
     created(){
     // 创建url /detail
     // 参数 lid
