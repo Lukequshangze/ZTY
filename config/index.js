@@ -5,12 +5,32 @@
 const path = require('path')
 
 module.exports = {
+  // devServer:{
+  //   proxy:{
+  //     '/api':{
+  //       target:'http://www.tuling123.com/openapi/api',
+  //       changeOrigin:true,
+  //       ws:true,
+  //       pathRewrite:{
+  //         '^/api':''
+  //       }
+  //     }
+  //   }
+  // },
   dev: {
 
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
-    proxyTable: {},
+    proxyTable: {
+      '/api': {                                               
+        target: 'http://openapi.tuling123.com/openapi/',  //主机ip
+        changeOrigin: true,               //是否跨域
+        pathRewrite: {
+            '^/api': '/api'                  //重写路径
+        }              
+    },
+    },
 
     // Various Dev Server settings
     host: 'localhost', // can be overwritten by process.env.HOST
